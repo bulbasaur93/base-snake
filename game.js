@@ -403,6 +403,7 @@ setInterval(() => {
 // Подключение кошельков (Phantom / Coinbase) к Base Sepolia
 let provider;
 let signer;
+let currentNetwork;
 
 // Базовые константы сети Base Sepolia
 const BASE_CHAIN_ID = 84532n;
@@ -437,10 +438,10 @@ async function connectPhantom() {
 
   provider = new ethers.BrowserProvider(ethProvider);
   signer = await provider.getSigner();
+  
+  currentNetwork = await provider.getNetwork();
 
-  const network = await provider.getNetwork();
-
-  if (network.chainId !== BASE_CHAIN_ID) {
+  if (currentNetwork.chainId !== BASE_CHAIN_ID) {
     try {
       await ethProvider.request({
         method: "wallet_switchEthereumChain",
@@ -461,8 +462,8 @@ async function connectPhantom() {
     )}`;
   }
   const networkEl = document.getElementById("network");
-const network = await provider.getNetwork();
-const chainId = Number(network.chainId);
+currentNetwork = await provider.getNetwork();
+const chainId = Number(currentNetwork.chainId);
 
 if (chainId === 8453) {
   networkEl.innerText = "Network: Base Mainnet";
@@ -515,7 +516,7 @@ async function connectCoinbase() {
     }
     const networkEl = document.getElementById("network");
 const network = await provider.getNetwork();
-const chainId = Number(network.chainId);
+const chainId = Number(currentNetwork.chainId);
 
 if (chainId === 8453) {
   networkEl.innerText = "Network: Base Mainnet";
@@ -537,4 +538,5 @@ if (chainId === 8453) {
 if (connectCbBtn) {
   connectCbBtn.onclick = connectCoinbase;
 }
+
 
