@@ -460,6 +460,18 @@ async function connectPhantom() {
       -4
     )}`;
   }
+  const networkEl = document.getElementById("network");
+const network = await provider.getNetwork();
+const chainId = Number(network.chainId);
+
+if (chainId === 8453) {
+  networkEl.innerText = "Network: Base Mainnet";
+} else if (chainId === 84532) {
+  networkEl.innerText = "Network: Base Sepolia";
+} else {
+  networkEl.innerText = "Network: Unsupported";
+}
+
   if (connectBtn) {
     connectBtn.disabled = true;
   }
@@ -501,6 +513,18 @@ async function connectCoinbase() {
         6
       )}…${addr.slice(-4)}`;
     }
+    const networkEl = document.getElementById("network");
+const network = await provider.getNetwork();
+const chainId = Number(network.chainId);
+
+if (chainId === 8453) {
+  networkEl.innerText = "Network: Base Mainnet";
+} else if (chainId === 84532) {
+  networkEl.innerText = "Network: Base Sepolia";
+} else {
+  networkEl.innerText = "Network: Unsupported";
+}
+
     if (connectCbBtn) {
       connectCbBtn.disabled = true;
     }
@@ -513,3 +537,4 @@ async function connectCoinbase() {
 if (connectCbBtn) {
   connectCbBtn.onclick = connectCoinbase;
 }
+
